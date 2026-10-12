@@ -17,13 +17,15 @@ timeline_budget:
 
 <!-- Lint override (2026-10-11): the AI provider names (Claude, ChatGPT) in User & Persona, FR-018, FR-024 and Open Question 1 were kept on purpose by the user. Connecting the learner's own subscription is treated as a product-scope decision, not a technology choice. -->
 
+<!-- Revision (2026-10-12, after tech-stack selection): third-party apps cannot use a consumer Claude subscription (API keys only). The user decided: no AI in the MVP. FR-017 and FR-018 moved to nice-to-have, FR-018 and FR-024 reworded to a personal API key, Open Questions 1 and 2 resolved, a Non-Goal added. -->
+
 # PRD: japanese-learn-app
 
 ## Vision & Problem Statement
 
 A beginner self-learner of Japanese who studies by chatting with a general-purpose AI assistant drops the habit after a few days. The chat turns into a mess: they don't know where they stopped, the conversation context runs out, and it is hard to find their way around. Every session starts from zero, they must decide on their own what to learn and how to ask for it, the material arrives as a wall of text with no exercises or visual presentation, and nothing tracks progress or brings material back for review. What they want instead is a systematic, orderly path with continuity and repetition.
 
-Insight (user's hypothesis, not yet verified against existing products): existing dedicated apps teach through English and are paid; their courses follow rigid paths that do not adapt to the learner; and grammar, vocabulary and explanations live in separate tools. Learning through Polish would make progress faster, the learner wants to shape the app's style to their own taste, and AI can assemble an adaptive path in one place while being paid for through AI subscriptions the learner already has.
+Insight (user's hypothesis, not yet verified against existing products): existing dedicated apps teach through English and are paid; their courses follow rigid paths that do not adapt to the learner; and grammar, vocabulary and explanations live in separate tools. Learning through Polish would make progress faster, the learner wants to shape the app's style to their own taste, and AI can assemble an adaptive path in one place while being paid for through AI subscriptions the learner already has. (Update 2026-10-12: the subscription part is disproven — see Open Question 1.)
 
 ## User & Persona
 
@@ -101,11 +103,12 @@ Insight (user's hypothesis, not yet verified against existing products): existin
   > Socrates: Counter-arguments offered ("one style is enough in MVP", "anime rank names are copyrighted"). Resolution: no counter-argument; stands as written.
 
 ### AI
-- FR-017: Learner can choose the learning mode — AI-assisted or without AI. Priority: must-have
+- FR-017: Learner can choose the learning mode — AI-assisted or without AI. Priority: nice-to-have
   > Socrates: Counter-arguments offered ("two modes = two products", "the non-AI mode may be thin"). Resolution: no counter-argument; stands as written.
-- FR-018: Learner can connect their own Claude subscription. Priority: must-have
+- FR-018: Learner can connect their own Claude account using a personal API key. Priority: nice-to-have
   > Socrates: Counter-argument considered: "two providers = double integration." Resolution: Claude only in MVP; ChatGPT moved to FR-024 (nice-to-have).
-- FR-024: Learner can connect their own ChatGPT subscription. Priority: nice-to-have
+  > Revision 2026-10-12: consumer subscriptions cannot be used by third-party apps, so connection is via a personal API key (pay-per-use); the whole AI mode is deferred out of the MVP by user decision.
+- FR-024: Learner can connect their own ChatGPT account using a personal API key. Priority: nice-to-have
   > Socrates: Split out of FR-018 during its challenge; counter-argument already considered there.
 
 ### Progress
@@ -145,11 +148,14 @@ Single user; no login. One local profile; learning data lives on-device only. No
 - No home-grown review algorithm built from scratch — use a proven spaced-repetition approach instead of inventing one.
 - No social features — no friends, leaderboards or shared progress.
 - No automatic sync — only manual export/import of progress.
+- No AI in the MVP — the AI-assisted mode (FR-017, FR-018, FR-024) comes after the MVP; the MVP must stand on its own without AI, per the guardrail.
 - No full accessibility (WCAG) guarantee in the MVP.
 
 ## Open Questions
 
 1. **Can a third-party mobile app use the learner's existing Claude / ChatGPT consumer subscription?** — The insight relies on paying for AI through a subscription the learner already has. Consumer subscriptions may not be usable from a third-party app at all, in which case AI would need a user-supplied API key (pay-per-use), a local model, or no AI in v1. Owner: user, to verify during tech-stack selection. Block: partial (affects how AI enters the product, not the core learning path).
+   **Resolved 2026-10-12:** no for Claude — since 2026, third-party apps cannot route requests through Free/Pro/Max plans and must use API keys. ChatGPT not verified separately. Decision: no AI in the MVP; a personal API key is the path for later.
 2. **Source of Polish vocabulary translations** — via the learner's connected AI subscription if Open Question 1 resolves positively; otherwise a starter word list prepared up front. Size and origin of that list TBD. Owner: user.
+   **Partly resolved 2026-10-12:** with no AI in the MVP, translations come from a starter word list prepared up front. Size and origin of the list still TBD.
 3. **What counts as "mastered"?** — the accuracy threshold that unlocks new material and the next rank (Business Logic). Owner: user; resolve during planning.
 4. **Which OS is the author's phone (iOS or Android)?** — the MVP targets only that device (NFR). Owner: user.
